@@ -1,0 +1,70 @@
+<?php
+session_start();
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (!empty($_POST['pseudo']) && !empty($_POST['email']) && !empty($_POST['mdp'])) {
+        $pseudo = htmlspecialchars($_POST['pseudo']);
+        $email = htmlspecialchars($_POST['email']);
+        $mdp = password_hash($_POST['mdp'], PASSWORD_DEFAULT); // Hash du mot de passe
+
+        // Connexion à la base de données
+        $bdd = new PDO('mysql:host=localhost;dbname=gsb;charset=utf8', 'root', '');
+
+        // Vérification si l'utilisateur existe déjà
+        $checkUser = $bdd->prepare('SELECT id_u FROM utilisateurs WHERE nom_u = ?');
+        $checkUser->execute(array($pseudo));
+        $existingUser = $checkUser->fetch();
+
+        if ($existingUser) {
+            echo "Cet utilisateur existe déjà.";
+        } else {
+            // Préparation de la requête d'insertion dans la table utilisateurs
+            $insertUser = $bdd->prepare('INSERT INTO utilisateurs (nom_u, email_u, mot_de_passe) VALUES (?, ?, ?)');
+            $insertUser->execute(array($pseudo, $email, $mdp));
+
+            // Sélection de l'utilisateur nouvellement inscrit
+            $recupUser = $bdd->prepare('SELECT id_u FROM utilisateurs WHERE nom_u = ?');
+            $recupUser->execute(array($pseudo));
+            $user = $recupUser->fetch();
+
+            if ($user) {
+                $_SESSION['pseudo'] = $pseudo;
+                $_SESSION['id'] = $user['id_u'];  
+                header('Location: index.php'); // Redirection après inscription
+                exit();
+            }
+        }
+    } else {
+        echo "Veuillez compléter tous les champs...";
+    }
+}
+?>
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscription</title>
+</head>
+<body>
+    <h2>Inscription</h2>
+    <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" align="center">
+        <label for="pseudo">Nom d'utilisateur :</label>
+        <input type="text" id="pseudo" name="pseudo" autocomplete="off" required><br><br>
+        
+        <label for="email">Adresse e-mail :</label>
+        <input type="email" id="email" name="email" autocomplete="off" required><br><br>
+        
+        <label for="mdp">Mot de passe :</label>
+        <input type="password" id="mdp" name="mdp" autocomplete="off" required><br><br>
+        
+        <input type="submit" value="S'inscrire">
+    </form>
+
+    <!-- Bouton de redirection vers la page de connexion -->
+    <form method="GET" action="connexion.php" align="center">
+        <input type="submit" value="Se connecter">
+    </form>
+</body>
+</html>
