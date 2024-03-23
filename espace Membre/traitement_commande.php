@@ -2,26 +2,38 @@
 // Inclusion du fichier database.php
 require_once 'database.php';
 
-// Vérifier si le formulaire a été soumis
+// Vérifier si le formulaire a été soumis en méthode POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Récupérer les données du formulaire
-    $produit_id = $_POST['produit'];
+    $stock_id = $_POST['produit'];
     $quantite = $_POST['quantite'];
 
-    // Connexion à la base de données (utilisation des variables définies dans database.php)
-    $bdd = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
+    try {
+        // Connexion à la base de données (utilisation des variables définies dans database.php)
+        $bdd = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
 
-    // Enregistrer la commande dans la base de données (vous devez implémenter cette partie)
-    // Exemple d'une requête préparée pour insérer la commande dans une table de commandes
-    $requete_insert_commande = $bdd->prepare('INSERT INTO commandes (produit_id, quantite) VALUES (?, ?)');
-    $requete_insert_commande->execute(array($produit_id, $quantite));
+        // Enregistrer la demande de commande dans la base de données
+        $requete_insert_demande = $bdd->prepare('INSERT INTO demandes_commandes (id_stock, quantite_demandee) VALUES (?, ?)');
+        $requete_insert_demande->execute(array($stock_id, $quantite));
 
-    // Mettre à jour le stock du produit dans la base de données (vous devez implémenter cette partie)
-    // Exemple d'une requête préparée pour mettre à jour le stock du produit
-    $requete_update_stock = $bdd->prepare('UPDATE produits SET quantite = quantite - ? WHERE id = ?');
-    $requete_update_stock->execute(array($quantite, $produit_id));
-
-    // Afficher un message de confirmation
-    echo "Votre commande a été passée avec succès.";
+        // Afficher un message de confirmation
+        echo "Votre demande de commande a été enregistrée. Elle est en attente d'approbation de l'administrateur.";
+    } catch(PDOException $e) {
+        // En cas d'erreur, afficher un message d'erreur
+        echo "Erreur : " . $e->getMessage();
+    }
 }
 ?>
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="commande.css">
+</head>
+<body>
+    <h1></h1>
+
+    <a href="dashboard.php"><button>Retour à Dashboard</button></a>
+</body>
+</html>

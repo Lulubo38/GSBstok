@@ -1,7 +1,45 @@
 body {
-    text-align: center; /* Alignement du contenu au centre */
+    font-family: Arial, sans-serif;
+    background-color: #e6edff; /* Couleur de fond bleu clair */
+}
+
+.container {
+    max-width: 300px; /* Réduire la largeur du conteneur */
+    margin: 50px auto; /* Centrer le conteneur avec une marge en haut */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 h1 {
-    margin-top: 50px; /* Marge en haut pour l'espace entre le titre et le haut de la page */
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px; /* Réduire l'espace entre le titre et le formulaire */
+}
+
+input[type="text"],
+input[type="password"],
+input[type="submit"] {
+    width: 100%;
+    padding: 8px; /* Réduire la taille du padding */
+    margin: 8px 0; /* Réduire l'espace entre les éléments */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+input[type="submit"] {
+    margin-top: 16px; /* Réduire la marge supérieure */
+    background-color: #4caf50;
+    color: #fff;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+.error-message {
+    color: red;
+    font-style: italic;
 }

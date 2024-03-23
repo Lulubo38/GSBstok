@@ -28,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($user) {
                 $_SESSION['pseudo'] = $nom;
                 $_SESSION['id'] = $user['id_utilisateur'];  
-                header('Location: index.php'); // Redirection après inscription
+                header('Location: dashboard.php'); // Redirection après inscription
                 exit();
             }
         }
@@ -61,7 +61,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </form>
 
     <!-- Bouton de redirection vers la page de connexion -->
-    <form method="GET" action="connexion.php" align="center">
+    <form method="GET" action="index.php" align="center">
         <input type="submit" value="Se connecter">
     </form>
 </body>

@@ -3,7 +3,7 @@
 <head>
     <title>Passation de Commandes</title>
     <meta charset="utf-8">
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="commande.css">
 </head>
 <body>
     <h1>Passation de Commandes</h1>
@@ -15,12 +15,12 @@
             // Inclusion du fichier de connexion à la base de données
             require_once 'database.php';
 
-            // Récupérer les produits disponibles
-            $requete_produits = $pdo->query('SELECT id, nom FROM produits');
-            $produits = $requete_produits->fetchAll();
+            // Récupérer les stocks disponibles
+            $requete_stocks = $pdo->query('SELECT id_stock, nom, quantite_disponible FROM stocks');
+            $stocks = $requete_stocks->fetchAll();
 
-            foreach ($produits as $produit) {
-                echo '<option value="' . $produit['id'] . '">' . $produit['nom'] . '</option>';
+            foreach ($stocks as $stock) {
+                echo '<option value="' . $stock['id_stock'] . '">' . $stock['nom'] . ' (Quantité disponible : ' . $stock['quantite_disponible'] . ')</option>';
             }
             ?>
         </select>
