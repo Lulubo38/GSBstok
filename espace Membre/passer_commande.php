@@ -1,28 +1,34 @@
-<?php
-// Vérifier si le formulaire a été soumis
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Récupérer les données du formulaire
-    $produit_id = $_POST['produit_id'];
-    $quantite = $_POST['quantite'];
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Passation de Commandes</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+    <h1>Passation de Commandes</h1>
 
-    // Vérifier la validité des données
-    if (!is_numeric($quantite) || $quantite <= 0) {
-        echo "La quantité commandée n'est pas valide.";
-        exit;
-    }
+    <form action="traitement_commande.php" method="post">
+        <label for="produit">Produit :</label>
+        <select name="produit" id="produit">
+            <?php
+            // Inclusion du fichier de connexion à la base de données
+            require_once 'database.php';
 
-    // Connexion à la base de données
-    $bdd = new PDO('mysql:host=localhost;dbname=gsb;charset=utf8', 'root', '');
+            // Récupérer les produits disponibles
+            $requete_produits = $pdo->query('SELECT id, nom FROM produits');
+            $produits = $requete_produits->fetchAll();
 
-    // Enregistrer la commande dans la base de données
-    $requete_insert_commande = $bdd->prepare('INSERT INTO commandes (produit_id, quantite) VALUES (?, ?)');
-    $requete_insert_commande->execute(array($produit_id, $quantite));
-
-    // Mettre à jour le stock du produit dans la base de données
-    $requete_update_stock = $bdd->prepare('UPDATE produits SET quantite = quantite - ? WHERE id = ?');
-    $requete_update_stock->execute(array($quantite, $produit_id));
-
-    // Afficher un message de confirmation
-    echo "Votre commande a été passée avec succès.";
-}
-?>
+            foreach ($produits as $produit) {
+                echo '<option value="' . $produit['id'] . '">' . $produit['nom'] . '</option>';
+            }
+            ?>
+        </select>
+        <br><br>
+        <label for="quantite">Quantité :</label>
+        <input type="number" name="quantite" id="quantite" min="1" required>
+        <br><br>
+        <input type="submit" value="Passer Commande">
+    </form>
+</body>
+</html>

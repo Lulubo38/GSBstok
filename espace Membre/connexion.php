@@ -1,21 +1,21 @@
 <?php
 session_start();
-$bdd = new PDO('mysql:host=localhost;dbname=gsb;charset=utf8;', 'root', '');
+require_once 'database.php'; // Inclure le fichier de connexion à la base de données
 
 if (isset($_POST['envoi'])) {
-    if (!empty($_POST['pseudo']) && !empty($_POST['mdp'])) {
-        $pseudo = htmlspecialchars($_POST['pseudo']);
-        $mdp = $_POST['mdp'];
+    if (!empty($_POST['nom']) && !empty($_POST['mot_de_passe'])) {
+        $nom = htmlspecialchars($_POST['nom']);
+        $mot_de_passe = $_POST['mot_de_passe'];
 
         // Rechercher l'utilisateur dans la table `utilisateurs`
-        $recupUser = $bdd->prepare('SELECT id_u, nom_u, mot_de_passe, id_role FROM utilisateurs WHERE nom_u = ?');
-        $recupUser->execute(array($pseudo));
+        $recupUser = $pdo->prepare('SELECT id_utilisateur, nom, mot_de_passe, id_role FROM utilisateurs WHERE nom = ?');
+        $recupUser->execute(array($nom));
         $user = $recupUser->fetch();
 
         // Si l'utilisateur est trouvé dans la table `utilisateurs`, vérifier le mot de passe
-        if ($user && password_verify($mdp, $user['mot_de_passe'])) {
-            $_SESSION['pseudo'] = $pseudo;
-            $_SESSION['id'] = $user['id_u'];
+        if ($user && password_verify($mot_de_passe, $user['mot_de_passe'])) {
+            $_SESSION['nom'] = $nom;
+            $_SESSION['id'] = $user['id_utilisateur'];
             $_SESSION['id_role'] = $user['id_role']; // Utiliser le rôle de l'utilisateur
 
             if ($user['id_role'] == 1 || $user['id_role'] == 2) {
@@ -45,16 +45,17 @@ if (isset($_POST['envoi'])) {
 <body>
     <h1>Connexion Utilisateur</h1>
     <form method="POST" action="" align="center">        
-        <input type="text" name="pseudo" autocomplete="off" placeholder="Nom d'utilisateur">
+        <input type="text" name="nom" autocomplete="off" placeholder="Nom d'utilisateur">
         <br>
-        <input type="password" name="mdp" autocomplete="off" placeholder="Mot de passe">
+        <input type="password" name="mot_de_passe" autocomplete="off" placeholder="Mot de passe">
         <br><br>
         <input type="submit" name="envoi" value="Se connecter">
     </form>
     <br>
-    <p>Vous êtes administrateur ?</p>
-    <form method="GET" action="connexion_admin.php" align="center">
-        <input type="submit" value="Je suis administrateur">
+
+    <!-- Bouton pour l'inscription -->
+    <form method="GET" action="inscription.php" align="center">
+        <input type="submit" value="Inscription">
     </form>
 </body>
 </html>

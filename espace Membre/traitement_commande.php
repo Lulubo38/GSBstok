@@ -1,12 +1,15 @@
 <?php
+// Inclusion du fichier database.php
+require_once 'database.php';
+
 // Vérifier si le formulaire a été soumis
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Récupérer les données du formulaire
     $produit_id = $_POST['produit'];
     $quantite = $_POST['quantite'];
 
-    // Connexion à la base de données
-    $bdd = new PDO('mysql:host=localhost;dbname=gsb;charset=utf8', 'root', '');
+    // Connexion à la base de données (utilisation des variables définies dans database.php)
+    $bdd = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
 
     // Enregistrer la commande dans la base de données (vous devez implémenter cette partie)
     // Exemple d'une requête préparée pour insérer la commande dans une table de commandes
