@@ -1,4 +1,4 @@
-
+/* dashboard.css */
 
 body {
     font-family: Arial, sans-serif;
@@ -11,6 +11,9 @@ header {
     background-color: #333;
     color: #fff;
     padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 nav ul {
@@ -41,6 +44,31 @@ select {
     padding: 8px;
     border-radius: 5px;
     border: 1px solid #ccc;
+}
+
+.dashboard-container {
+    display: flex;
+    align-items: center;
+}
+
+.passer-commande-btn,
+.deconnexion-btn {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.passer-commande-btn:hover,
+.deconnexion-btn:hover {
+    background-color: #45a049;
+    cursor: pointer;
+}
+
+.deconnexion-btn {
+    margin-right: 20px; /* Ajout de marge entre les boutons */
 }
 
 #listeProduits {

@@ -19,7 +19,7 @@ $stocks = $requete_stocks->fetchAll();
 <head>
     <title>Consultation des Stocks</title>
     <meta charset="utf-8">
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" href="dashboard.css"> <!-- Lien vers le fichier CSS externe -->
 </head>
 <body>
     <h1>Consultation des Stocks</h1>
@@ -27,6 +27,9 @@ $stocks = $requete_stocks->fetchAll();
     <div class="dashboard-container">
         <a href="logout.php">Déconnexion</a>
         <a href="passer_commande.php" class="passer-commande-btn">Passer Commande</a> <!-- Lien vers la page passer_commande.php -->
+        <?php if ($_SESSION['id_role'] != 1) : ?>
+            <a href="historique_utilisateur.php" class="historique-commande-btn">Historique des commandes</a>
+        <?php endif; ?>
     </div>
 
     <label for="type">Afficher :</label>

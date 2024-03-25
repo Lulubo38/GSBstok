@@ -49,7 +49,11 @@ $commandes = $recupCommandes->fetchAll();
                     <td><?php echo $commande['quantite_demandee']; ?></td>
                     <td><?php echo $commande['date_demande']; ?></td>
                     <td><?php echo $commande['statut']; ?></td>
-                    <td><a href="valider_demande.php?id=<?php echo $commande['id_demande']; ?>">Valider</a></td>
+                    <td>
+                        <a href="valider_demande.php?id=<?php echo $commande['id_demande']; ?>">Valider</a>
+                        <!-- Lien pour refuser une commande -->
+                        <a href="refuser_demande.php?id=<?php echo $commande['id_demande']; ?>" onclick="return confirm('Êtes-vous sûr de vouloir refuser cette commande ?')">Refuser</a>
+                    </td>
                 </tr>
             <?php endforeach; ?>
         </tbody>

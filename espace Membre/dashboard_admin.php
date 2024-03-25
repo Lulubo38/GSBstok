@@ -2,7 +2,7 @@
 session_start();
 require_once 'database.php'; // Inclure le fichier de connexion à la base de données
 
-// Vérifier si l'utilisateur est connecté
+// Vérifier si l'utilisateur est connecté et s'il est administrateur
 if (!isset($_SESSION['id']) || $_SESSION['id_role'] != 1) {
     // Rediriger vers la page de connexion
     header("Location: index.php");
@@ -20,7 +20,7 @@ $stocks = $requete_stocks->fetchAll();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tableau de Bord Admin</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="admin.css">
 </head>
 <body>
     <header>
@@ -50,7 +50,7 @@ $stocks = $requete_stocks->fetchAll();
         <script>
             document.getElementById('type').addEventListener('change', function() {
                 var typeSelectionne = this.value;
-                var tousLesProduits = <?php echo json_encode($tous_les_produits); ?>;
+                var tousLesProduits = <?php echo json_encode($stocks); ?>;
 
                 var produitsFiltres = tousLesProduits.filter(function(produit) {
                     if (typeSelectionne === 'tous') {
@@ -64,7 +64,7 @@ $stocks = $requete_stocks->fetchAll();
 
                 if (produitsFiltres.length > 0) {
                     produitsFiltres.forEach(function(produit) {
-                        listeHtml += '<li>' + produit.nom + ' - Quantité : ' + produit.quantite + '</li>';
+                        listeHtml += '<li>' + produit.nom + ' - Quantité : ' + produit.quantite_disponible + '</li>';
                     });
                 } else {
                     listeHtml += '<li>Aucun produit trouvé.</li>';

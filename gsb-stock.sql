@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : dim. 24 mars 2024 à 11:59
+-- Généré le : lun. 25 mars 2024 à 21:05
 -- Version du serveur : 10.4.32-MariaDB
 -- Version de PHP : 8.2.12
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de données : `gsb`
+-- Base de données : `gsb-stock`
 --
 
 -- --------------------------------------------------------
@@ -57,7 +57,8 @@ INSERT INTO `demandes_commandes` (`id_demande`, `id_stock`, `quantite_demandee`,
 (9, 2, 1, '2024-03-23 20:03:38', 'validee'),
 (10, 1, 2, '2024-03-23 20:46:52', 'validee'),
 (11, 4, 4, '2024-03-23 20:53:02', 'en_attente'),
-(12, 5, 1, '2024-03-23 21:11:30', 'en_attente');
+(12, 5, 1, '2024-03-23 21:11:30', 'en_attente'),
+(13, 1, 5, '2024-03-25 20:35:40', 'validee');
 
 -- --------------------------------------------------------
 
@@ -135,7 +136,7 @@ CREATE TABLE `stocks` (
 --
 
 INSERT INTO `stocks` (`id_stock`, `nom`, `description`, `quantite_disponible`, `type`) VALUES
-(1, 'smecta', 'pour les maux de ventre ', 50, 'medicament'),
+(1, 'smecta', 'pour les maux de ventre ', 69, 'medicament'),
 (2, 'brosse a dent', 'souple ', 4, 'materiel'),
 (4, 'brique', 'yftydytd', 7, 'materiel'),
 (5, 'Paracétamol', ' Antalgique • Antipyrétique', 4, 'medicament');
@@ -230,7 +231,7 @@ ALTER TABLE `commandes`
 -- AUTO_INCREMENT pour la table `demandes_commandes`
 --
 ALTER TABLE `demandes_commandes`
-  MODIFY `id_demande` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id_demande` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT pour la table `mouvements`
