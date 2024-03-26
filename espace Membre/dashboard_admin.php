@@ -30,6 +30,7 @@ $stocks = $requete_stocks->fetchAll();
                 <li><a href="logout.php">Déconnexion</a></li>
                 <li><a href="historique-commande.php">Historique des commandes</a></li>
                 <li><a href="gerer_stock.php">Gérer les stocks</a></li>
+                <li><a href="commande-mois.php">Commandes par mois</a></li> <!-- Ajout du lien vers la page de commandes par mois -->
             </ul>
         </nav>
     </header>

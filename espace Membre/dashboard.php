@@ -20,6 +20,11 @@ $stocks = $requete_stocks->fetchAll();
     <title>Consultation des Stocks</title>
     <meta charset="utf-8">
     <link rel="stylesheet" href="dashboard.css"> <!-- Lien vers le fichier CSS externe -->
+    <style>
+        .stock-bas {
+            color: red;
+        }
+    </style>
 </head>
 <body>
     <h1>Consultation des Stocks</h1>
@@ -30,6 +35,7 @@ $stocks = $requete_stocks->fetchAll();
         <?php if ($_SESSION['id_role'] != 1) : ?>
             <a href="historique_utilisateur.php" class="historique-commande-btn">Historique des commandes</a>
         <?php endif; ?>
+        <a href="populaire.php" class="produits-populaires-btn">Produits Populaires</a> <!-- Lien vers la page des produits populaires -->
     </div>
 
     <label for="type">Afficher :</label>
@@ -68,7 +74,8 @@ $stocks = $requete_stocks->fetchAll();
 
             if (stocksFiltres.length > 0) {
                 stocksFiltres.forEach(function(stock) {
-                    listeHtml += '<li>' + stock.nom + ' - Quantité disponible : ' + stock.quantite_disponible + '</li>';
+                    var classeCss = stock.quantite_disponible < 5 ? 'stock-bas' : '';
+                    listeHtml += '<li class="' + classeCss + '">' + stock.nom + ' - Quantité disponible : ' + stock.quantite_disponible + '</li>';
                 });
             } else {
                 listeHtml += '<p>Aucun stock trouvé.</p>';
